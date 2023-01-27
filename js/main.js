@@ -8,10 +8,17 @@ const view = new NotesView(app, {
   onNoteAdd() {
     console.log("Let's add a new note!");
   },
+  onNoteSelect(id) {
+    console.log("Note Selected:" + id);
+  },
   //in this function we simply console.log the newTitle and body
   onNoteEdit(newTitle, newBody) {
     console.log("The new title is:", newTitle);
     console.log("The new body is:", newBody);
+  },
+  onNoteDelete(id) {
+    console.log("Note deleted: " + id);
+    NotesApi.deleteNote(id);
   },
 });
 console.log(NotesApi.getAllNotes());

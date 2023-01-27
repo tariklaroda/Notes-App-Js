@@ -55,7 +55,7 @@ export default class NotesView {
     const MAX_BODY_LENGTH = 60;
 
     return `
-    <div class="notes__list-item data-note-id="${id}">
+    <div class="notes__list-item" data-note-id="${id}">
     <div class="notes__small-title">${title}</div>
     <div class="notes__small-body">${body.substring(0, MAX_BODY_LENGTH)}${
       body.length > MAX_BODY_LENGTH ? "..." : ""
@@ -86,5 +86,25 @@ export default class NotesView {
       //insert the HTML version one after the other
       notesListContainer.insertAdjacentHTML("beforeend", html);
     }
+
+    // Add select/delete events for each list item
+
+    // for EVERY note in container add an event listener
+    notesListContainer
+      .querySelectorAll(".notes__list-item")
+      .forEach((noteListItem) => {
+        noteListItem.addEventListener("click", () => {
+          this.onNoteSelect(noteListItem.dataset.noteId);
+        });
+        noteListItem.addEventListener("dblclick", () => {
+          const doDelete = confirm(
+            "Are you sure you want to delete this note?"
+          );
+
+          if (doDelete) {
+            this.onNoteDelete(noteListItem.dataset.noteId);
+          }
+        });
+      });
   }
 }
