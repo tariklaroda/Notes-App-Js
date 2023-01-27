@@ -38,5 +38,12 @@ export default class NotesApi {
     localStorage.setItem("notesapp-notes", JSON.stringify(notes));
   }
 
-  static deleteNote(id) {}
+  static deleteNote(id) {
+    //get all of the notes, then filter to get all the notes that DON'T have the selected id.
+    const notes = NotesApi.getAllNotes();
+    const newNotes = notes.filter((note) => note.id != id);
+
+    //store all the notes (that don't have the deleted note id)
+    localStorage.setItem("notesapp-notes", JSON.stringify(newNotes));
+  }
 }
