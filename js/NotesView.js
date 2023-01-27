@@ -46,19 +46,12 @@ export default class NotesView {
       });
     });
 
-    console.log(
-      this._createListItemHTML(
-        440772,
-        "Tarik LaRoda",
-        "Bachelor Of Science Student",
-        new Date()
-      )
-    );
-
     // TODO: Hide the note preview by default
   }
 
   _createListItemHTML(id, title, body, updated) {
+    //create the sidebar Note
+    // if the body is more than 90 characters, crop it
     const MAX_BODY_LENGTH = 60;
 
     return `
@@ -66,11 +59,32 @@ export default class NotesView {
     <div class="notes__small-title">${title}</div>
     <div class="notes__small-body">${body.substring(0, MAX_BODY_LENGTH)}${
       body.length > MAX_BODY_LENGTH ? "..." : ""
-    }/div>
+    }</div>
     <div class="notes__small-updated">${updated.toLocaleString(undefined, {
       dateStyle: "full",
       timeStyle: "short",
     })}</div>
     `;
+  }
+
+  //This Function updates the Note lists in the sidebar
+  updateNoteList(notes) {
+    const notesListContainer = this.root.querySelector(".notes__list");
+
+    // Empty The Notes List (The HTML version)
+    notesListContainer.innerHTML = "";
+
+    //create an HTML version for each note
+    for (const note of notes) {
+      const html = this._createListItemHTML(
+        note.id,
+        note.title,
+        note.body,
+        new Date(note.updated)
+      );
+
+      //insert the HTML version one after the other
+      notesListContainer.insertAdjacentHTML("beforeend", html);
+    }
   }
 }
