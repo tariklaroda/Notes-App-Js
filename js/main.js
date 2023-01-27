@@ -23,4 +23,6 @@ const view = new NotesView(app, {
 });
 console.log(NotesApi.getAllNotes());
 
-view.updateNoteList(NotesApi.getAllNotes());
+const notes = NotesApi.getAllNotes();
+view.updateNoteList(notes);
+view.updateActiveNote(notes[0]);

@@ -47,6 +47,7 @@ export default class NotesView {
     });
 
     // TODO: Hide the note preview by default
+    this.updateNotePreviewVisibility(false);
   }
 
   _createListItemHTML(id, title, body, updated) {
@@ -106,5 +107,27 @@ export default class NotesView {
           }
         });
       });
+  }
+
+  updateActiveNote(note) {
+    this.root.querySelector(".notes__title").value = note.title;
+    this.root.querySelector(".notes__body").value = note.body;
+
+    //if note was previously selected, remove the "bolded class"
+    this.root.querySelectorAll(".notes__list-item").forEach((noteListItem) => {
+      noteListItem.classList.remove("notes__list-item--selected");
+    });
+
+    // specifically choose the note with right id, to be selected
+    // add the 'bolded class' to signify that it is the selected note
+    this.root
+      .querySelector(`.notes__list-item[data-note-id="${note.id}"]`)
+      .classList.add("notes__list-item--selected");
+  }
+
+  updateNotePreviewVisibility(visible) {
+    this.root.querySelector(".notes__preview").style.visibility = visible
+      ? "visible"
+      : "hidden";
   }
 }
