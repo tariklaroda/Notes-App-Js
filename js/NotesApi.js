@@ -25,11 +25,12 @@ export default class NotesApi {
 
     // Edit/Update
     if (existing) {
+      //if the note id already exist then simply update
       existing.title = noteToSave.title;
       existing.body = noteToSave.body;
       existing.updated = new Date().toISOString();
     } else {
-      //give note an id and a time stamp
+      //give new note an id and a time stamp
       noteToSave.id = Math.floor(Math.random() * 1000000);
       noteToSave.updated = new Date().toISOString();
       notes.push(noteToSave);

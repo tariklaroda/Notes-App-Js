@@ -3,6 +3,8 @@ import NotesApi from "./NotesApi.js";
 import NotesView from "./NotesView.js";
 
 const app = document.getElementById("app");
+
+//create the view
 const view = new NotesView(app, {
   //in this function we simply console.log that the button was clicked
   onNoteAdd() {

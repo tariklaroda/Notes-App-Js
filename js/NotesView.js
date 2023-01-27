@@ -1,4 +1,4 @@
-// We're using this javascript file to render the HTML for our notes app
+// We're using this javascript file to render the HTML for our notes app.
 
 export default class NotesView {
   //create a constructor that will take the root (the 'app' div) and an object
@@ -6,13 +6,14 @@ export default class NotesView {
     root,
     { onNoteSelect, onNoteAdd, onNoteEdit, onNoteDelete } = {}
   ) {
+    // these are all functions (except root) -- that will be called when constructed
     this.root = root;
     this.onNoteSelect = onNoteSelect;
     this.onNoteAdd = onNoteAdd;
     this.onNoteEdit = onNoteEdit;
     this.onNoteDelete = onNoteDelete;
 
-    //render initial HTML for the root
+    // render the initial HTML for the root
     this.root.innerHTML = `
         <div class="notes__sidebar"> 
             <button class="notes__add">Add Note</button>
@@ -30,13 +31,13 @@ export default class NotesView {
     const inpTitle = this.root.querySelector(".notes__title");
     const inpBody = this.root.querySelector(".notes__body");
 
-    //add event listener when button is clicked
+    // When add button is clicked, call the appropriate function
     btnAddNote.addEventListener("click", () => {
       // call the add function
       this.onNoteAdd();
     });
 
-    //for both the Title and Body inputs, call event function after you exit the text field
+    // Call the onEdit function whenever the user exits the Title || Body text field
     [inpTitle, inpBody].forEach((inputField) => {
       inputField.addEventListener("blur", () => {
         //get updated Title and body, from the elements
@@ -51,10 +52,11 @@ export default class NotesView {
   }
 
   _createListItemHTML(id, title, body, updated) {
-    //create the sidebar Note
+    // create the sidebar representation of the note
     // if the body is more than 90 characters, crop it
     const MAX_BODY_LENGTH = 60;
 
+    //create the html that makes the tiny note on the sidebar
     return `
     <div class="notes__list-item" data-note-id="${id}">
     <div class="notes__small-title">${title}</div>
@@ -84,13 +86,15 @@ export default class NotesView {
         new Date(note.updated)
       );
 
-      //insert the HTML version one after the other
+      //insert the HTML version of the note one after the other
       notesListContainer.insertAdjacentHTML("beforeend", html);
     }
 
     // Add select/delete events for each list item
 
     // for EVERY note in container add an event listener
+    // When clicked SELECT the note
+    // When Double-Clicked delete the note
     notesListContainer
       .querySelectorAll(".notes__list-item")
       .forEach((noteListItem) => {
@@ -109,22 +113,25 @@ export default class NotesView {
       });
   }
 
+  // This function updates the active note
   updateActiveNote(note) {
+    //get the current notes title and body from the textfield
     this.root.querySelector(".notes__title").value = note.title;
     this.root.querySelector(".notes__body").value = note.body;
 
-    //if note was previously selected, remove the "bolded class"
+    // if note was previously selected (and not anymore) remove the "bolded class"
     this.root.querySelectorAll(".notes__list-item").forEach((noteListItem) => {
       noteListItem.classList.remove("notes__list-item--selected");
     });
 
-    // specifically choose the note with right id, to be selected
     // add the 'bolded class' to signify that it is the selected note
+
     this.root
-      .querySelector(`.notes__list-item[data-note-id="${note.id}"]`)
+      .querySelector(`.notes__list-item[data-note-id="${note.id}"]`) // specifically choose the note with right id, to be selected
       .classList.add("notes__list-item--selected");
   }
 
+  // This function updates the visibility of the preview
   updateNotePreviewVisibility(visible) {
     this.root.querySelector(".notes__preview").style.visibility = visible
       ? "visible"
