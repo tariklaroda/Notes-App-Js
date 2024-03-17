@@ -2,8 +2,6 @@
 // To store and retrieve our notes
 
 export default class NotesApi {
-  //methods we will be using
-
   static getAllNotes() {
     // gets the notes from local storage, if there are no notes return
     // empty array
