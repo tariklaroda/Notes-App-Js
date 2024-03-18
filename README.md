@@ -9,8 +9,8 @@ Simple app used for taking class notes. Create, Update and delete notes that are
 
 # How To Use
 
-- Type in the corresponding text box to update existing note
-- right click on LEFT PREVIEW to delete a note.
+- Type in the corresponding text box to update the existing note
+- double click on LEFT PREVIEW to delete a note.
 
 # What I Learned From This Work
 
